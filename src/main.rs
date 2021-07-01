@@ -1,3 +1,6 @@
+mod config;
+use config::Wallet;
+
 use serenity::async_trait;
 use serenity::client::{Client, Context, EventHandler};
 use serenity::framework::standard::{
@@ -5,9 +8,6 @@ use serenity::framework::standard::{
     CommandResult, StandardFramework,
 };
 use serenity::model::channel::Message;
-
-// use std::env;
-// use std::time;
 
 #[group]
 #[commands(info, help, whois, play, monies)]
@@ -24,9 +24,11 @@ async fn main() {
         .configure(|c| c.prefix("#"))
         .group(&GENERAL_GROUP);
 
-    let token = "ODUyNzQ5OTI1MTQ2MTY1MjY4.YMLXQQ.3Oix94BY5gx4jh3tTmt9TJQge80";
-    // let token = env::var("DISCORD_TOKEN").expect("token");
-    let mut client = Client::builder(token)
+    let mut wallet = Wallet::new();
+    let config = "config.toml";
+    wallet.load(config);
+
+    let mut client = Client::builder(wallet.get("chimkin"))
         .event_handler(Handler)
         .framework(framework)
         .await
