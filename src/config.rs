@@ -10,21 +10,16 @@ pub struct Wallet {
 }
 
 impl Wallet {
-    pub fn new() -> Self {
-        Wallet {
-            tokens: HashMap::new(),
-        }
-    }
-
-    pub fn load(&mut self, path: &str) {
+    pub fn load(path: &str) -> Self {
         let mut file = File::open(path).expect("Failed to open file");
         let mut contents = String::new();
 
         file.read_to_string(&mut contents)
             .expect("Failed to read file");
 
-        contents = format!(r#"{}"#, contents);
-        self.tokens = toml::from_str(contents.as_str()).unwrap();
+        return Wallet {
+            tokens: toml::from_str(contents.as_str()).unwrap(),
+        };
     }
 
     pub fn get(&self, k: &str) -> String {

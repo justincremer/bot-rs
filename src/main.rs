@@ -24,9 +24,8 @@ async fn main() {
         .configure(|c| c.prefix("#"))
         .group(&GENERAL_GROUP);
 
-    let mut wallet = Wallet::new();
-    let config = "config.toml";
-    wallet.load(config);
+    let config = "Config.toml";
+    let wallet = Wallet::load(config);
 
     let mut client = Client::builder(wallet.get("chimkin"))
         .event_handler(Handler)
