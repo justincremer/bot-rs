@@ -1,28 +1,22 @@
-mod config;
-use config::Wallet;
+use serenity::client::Client;
+use serenity::framework::standard::macros::group;
+use serenity::framework::standard::StandardFramework;
 
-use serenity::async_trait;
-use serenity::client::{Client, Context, EventHandler};
-use serenity::framework::standard::{
-    macros::{command, group},
-    CommandResult, StandardFramework,
-};
-use serenity::model::channel::Message;
+mod config;
+mod handlers;
+
+use config::Wallet;
+use handlers::{chimkin::*, Handler};
 
 #[group]
 #[commands(info, help, whois, play, monies)]
-struct General;
-
-struct Handler;
-
-#[async_trait]
-impl EventHandler for Handler {}
+struct Chimkin;
 
 #[tokio::main]
 async fn main() {
     let framework = StandardFramework::new()
         .configure(|c| c.prefix("#"))
-        .group(&GENERAL_GROUP);
+        .group(&CHIMKIN_GROUP);
 
     let config = "Config.toml";
     let wallet = Wallet::load(config);
@@ -37,39 +31,4 @@ async fn main() {
     if let Err(e) = client.start().await {
         println!("An error occurred while running the client: {:?}", e);
     }
-}
-
-#[command]
-async fn info(ctx: &Context, msg: &Message) -> CommandResult {
-    msg.reply(ctx, "Info Panel under construction").await?;
-
-    Ok(())
-}
-
-#[command]
-async fn help(ctx: &Context, msg: &Message) -> CommandResult {
-    msg.reply(ctx, "Help Panel under construction").await?;
-
-    Ok(())
-}
-
-#[command]
-async fn whois(ctx: &Context, msg: &Message) -> CommandResult {
-    msg.reply(ctx, "Whois command under construction").await?;
-
-    Ok(())
-}
-
-#[command]
-async fn play(ctx: &Context, msg: &Message) -> CommandResult {
-    msg.reply(ctx, "Play command under construction").await?;
-
-    Ok(())
-}
-
-#[command]
-async fn monies(ctx: &Context, msg: &Message) -> CommandResult {
-    msg.reply(ctx, "Monies command under construction").await?;
-
-    Ok(())
 }
