@@ -6,7 +6,9 @@ edition = "2018"
 
 [dependencies]
 serenity = "0.10"
-tokio = { version = "1.0", features = ["macros", "rt-multi-thread"] }
+tokio = { version="1.0", features=["macros", "rt-multi-thread"] }
+discord = { git="https://github.com/SpaceManiac/discord-rs" }
+toml = "0.5"
 serde = "1.0"
-toml ="0.5"
-
+serde_derive = "1.0.11"
+serde_json = "1.0"

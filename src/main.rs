@@ -15,7 +15,7 @@ struct Chimkin;
 #[tokio::main]
 async fn main() {
     let framework = StandardFramework::new()
-        .configure(|c| c.prefix("#"))
+        .configure(|c| c.prefix("!"))
         .group(&CHIMKIN_GROUP);
 
     let config = "Config.toml";
