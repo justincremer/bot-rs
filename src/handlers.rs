@@ -1,14 +1,6 @@
 use serenity::async_trait;
 use serenity::client::EventHandler;
 
-// macro_rules! hashmap {
-//     ($( $key: expr => $val: expr ),*) => {{
-//          let mut map = ::std::collections::HashMap::new();
-//          $( map.insert($key, $val); )*
-//          map
-//     }}
-// }
-
 pub struct Handler;
 
 #[async_trait]
@@ -48,10 +40,12 @@ pub mod chimkin {
  !info         → Chimkin info panel
  !help         → Chimkin help panel
  !whois <name> → Dox a friend
- !play  <link> → Play a banger
- !monies       → Under construction 
+ !play  <link> → Under construction
+ !monies       → Under construction
 ☵═══════════════════════════════════☵
 ```";
+
+        // !play  <link> → Play a banger
 
         message_response(ctx, msg, res).await
     }
@@ -60,7 +54,7 @@ pub mod chimkin {
     pub async fn whois(ctx: &Context, msg: &Message) -> CommandResult {
         let quotes: HashMap<&str, Vec<&str>> = [
             (
-                "Justin",
+                "justin",
                 vec![
                     "Girl with basket of fruit",
                     "Seeing lil ghosts everywhere",
@@ -70,11 +64,11 @@ pub mod chimkin {
                 ],
             ),
             (
-                "Sophie",
+                "sophie",
                 vec!["Toasty", "Have you tried the oat milk?", "Hella"],
             ),
             (
-                "Angela",
+                "angela",
                 vec![
                     "S tier troglodite",
                     "Squaters are people too",
@@ -82,7 +76,7 @@ pub mod chimkin {
                 ],
             ),
             (
-                "Paul",
+                "paul",
                 vec![
                     "Paul is paulgers",
                     "Secretly a sweet potato",
@@ -90,7 +84,7 @@ pub mod chimkin {
                 ],
             ),
             (
-                "Liana",
+                "liana",
                 vec![
                     "WHEN\nWENH\nWHEN YOU\nWHEN OU\nWHEN\nwHEN YOU",
                     "BUNBUN",
@@ -99,7 +93,7 @@ pub mod chimkin {
                 ],
             ),
             (
-                "Sunny",
+                "sunny",
                 vec![
                     "Sunnu nation must rise!",
                     "┻━┻ ︵ ＼(’0’)/／ ︵ ┻━┻",
@@ -107,7 +101,7 @@ pub mod chimkin {
                 ],
             ),
             (
-                "Joseph",
+                "joseph",
                 vec![
                     "Da Bling",
                     "Sunday is Jesus' day to game",
@@ -115,14 +109,14 @@ pub mod chimkin {
                 ],
             ),
             (
-                "Fluzz",
+                "fluzz",
                 vec![
                     "Just slap on a Arc<Mutex<_>>",
                     "Controls chutes and shoes alike",
                 ],
             ),
             (
-                "Siah",
+                "siah",
                 vec![
                 "SUNNU YOU NEED TO CALM DOWN NOW.",
 		"Welcome galaxy, noice to have you join.",
@@ -136,7 +130,7 @@ pub mod chimkin {
 		                     "don’t you dare mess with texas. i know where you live…",],
             ),
             (
-                "Kreiker",
+                "kreiker",
                 vec![
                     "YEEEEEEHAWWWWW",
                     "My pride is immeasurable, and my day is much better",
@@ -150,8 +144,8 @@ pub mod chimkin {
         let args = msg.content.split(" ").collect::<Vec<_>>();
         let res = match args.len() {
             2 => {
-                let name = args[1];
-                match quotes.get(name) {
+                let name = String::from(args[1]).to_lowercase();
+                match quotes.get(name.as_str()) {
                     Some(v) => {
                         let max = v.len();
                         let mut rng = thread_rng();
